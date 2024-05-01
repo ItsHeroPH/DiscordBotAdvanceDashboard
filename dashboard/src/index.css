@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.no-scrollbar {
+    scrollbar-width: none;
+}
+
+input.slider {
+    -webkit-appearance: none;
+    background: linear-gradient(90deg, #0284c7 60%, #27272a 60%);
+    -webkit-transition: 1s;
+    transition: opacity 1s;
+}
+input.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background: white;
+    cursor: pointer;
+}
+input.slider::-moz-range-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background: white;
+    cursor: pointer;
+}

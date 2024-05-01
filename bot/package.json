@@ -1,0 +1,32 @@
+{
+  "name": "hewobot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --env-file=.env .",
+    "dev": "nodemon --env-file=.env ."
+  },
+  "keywords": [],
+  "author": "ItsHeroPH",
+  "license": "ISC",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.52",
+    "@napi-rs/image": "^1.9.2",
+    "body-parser": "^1.19.0",
+    "canvas": "^2.11.2",
+    "chalk": "^4.1.2",
+    "connect-mongo": "^4.6.0",
+    "cors": "^2.8.5",
+    "discord.js": "^14.14.1",
+    "express": "^4.17.3",
+    "express-session": "^1.17.2",
+    "http": "^0.0.1-security",
+    "mongoose": "^6.2.4",
+    "node-superfetch": "^0.3.4",
+    "passport": "^0.5.0",
+    "passport-discord": "^0.1.4",
+    "url": "^0.11.1"
+  }
+}
