@@ -11,7 +11,6 @@ const { PermissionFlagsBits } = require("discord.js");
 const Guild = require("../schemas/settings/Guild");
 const mainLeveling = require("./routes/mainLeveling");
 const mainConfiguration = require("./routes/mainConfiguration");
-const mainReaction = require("./routes/mainReaction");
 
 module.exports = (client) => {
     app.use(session({
@@ -126,9 +125,7 @@ module.exports = (client) => {
     mainConfiguration(app, client, checkIfValid)
     // guild leveling
     mainLeveling(app, client, checkIfValid)
-    // guild reaction roles
-    mainReaction(app, client, checkIfValid)
-
+	
     http.listen(client.config.port, () => {
         client.logger.info("DASHBOARD","Dashboard is Ready!")
 		client.logger.info("DASHBAORD",`Dashboard is listening to ${client.config.port}`)
