@@ -10,9 +10,6 @@ import { mainConfigurationLoader } from './loaders/dashboard/mainConfiguration'
 import Loading from './components/loading'
 import { mainLogsLoader } from './loaders/dashboard/mainLogs'
 import { mainLevelingLoader } from './loaders/dashboard/mainLeveling'
-import { mainReactionLoader } from './loaders/dashboard/mainReaction.js/mainReaction'
-import { mainReactionCreateLoader } from './loaders/dashboard/mainReaction.js/mainReactionCreate'
-import { mainReactionEditLoader } from './loaders/dashboard/mainReaction.js/mainReactionEdit'
 
 const Home = lazy(() => import('./pages/Home'))
 const NotFound = lazy(() => import('./pages/404'))
