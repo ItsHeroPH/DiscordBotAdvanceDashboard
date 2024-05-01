@@ -21,9 +21,6 @@ const Dashboard = lazy(() => import('./pages/Dashboard'))
 const MainDashboard = lazy(() => import('./pages/dashboard/mainDashboard'))
 const MainConfiguration = lazy(() => import('./pages/dashboard/mainConfiguration'))
 const MainLogs = lazy(() => import('./pages/dashboard/mainLogs'))
-const MainReaction = lazy(() => import('./pages/dashboard/mainReaction/mainReaction'))
-const MainReactionCreate = lazy(() => import('./pages/dashboard/mainReaction/mainReactionCreate'))
-const MainReactionEdit = lazy(() => import('./pages/dashboard/mainReaction/mainReactionEdit'))
 const MainLeveling = lazy(() => import('./pages/dashboard/mainLeveling'))
 
 const router = createBrowserRouter([
@@ -65,27 +62,6 @@ const router = createBrowserRouter([
           <MainLogs/>
         </Suspense>,
         loader: mainLogsLoader
-      },
-      {
-        path: "/dashboard/:guildID/reactionroles",
-        element: <Suspense fallback={<Loading/>}>
-          <MainReaction/>
-        </Suspense>,
-        loader: mainReactionLoader
-      },
-      {
-        path: "/dashboard/:guildID/reactionroles/create",
-        element: <Suspense fallback={<Loading/>}>
-          <MainReactionCreate/>
-        </Suspense>,
-        loader: mainReactionCreateLoader
-      },
-      {
-        path: "/dashboard/:guildID/reactionroles/edit/:messageID",
-        element: <Suspense fallback={<Loading/>}>
-          <MainReactionEdit/>
-        </Suspense>,
-        loader: mainReactionEditLoader
       },
       {
         path: "/dashboard/:guildID/leveling",
