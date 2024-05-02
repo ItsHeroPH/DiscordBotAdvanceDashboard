@@ -2,6 +2,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import NavigationBar from "../components/NavigationBar";
 import { useLoaderData } from "react-router-dom";
 import leveling_card from "../public/leveling-card.png"
+import reaction_roles from "../public/reaction-roles.png"
 
 export default function Home() {
     const { bot, user } = useLoaderData()
@@ -35,6 +36,16 @@ export default function Home() {
                         </div>
                         <div className="col-span-3">
                             <img className="w-[400px] h-[400px]"src={leveling_card}/>
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-3 xl:grid-cols-6 gap-16 items-center">
+                        <div className="col-span-3">
+                            <img className="w-[400px] h-[400px]"src={reaction_roles}/>
+                        </div>
+                        <div className="col-span-3 flex flex-col gap-4">
+                            <h1 className="text-4xl text-white font-black">Reaction Roles</h1>
+                            <p className="text-md text-gray-400 font-medium text-wrap">Make it more easier for you to give them all the roles they wanted by implementing our reaction roles system. 
+                            This is design to make your server modern feels, with a few clicks they can get the roles that they wanted for.</p>
                         </div>
                     </div>
                 </div>

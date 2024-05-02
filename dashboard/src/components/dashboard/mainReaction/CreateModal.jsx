@@ -1,9 +1,10 @@
-import { useState } from "react"
-import SelectChannel from "./SelectChannel"
-import Message from "./Message"
-import EmojiRoles from "./EmojiRoles"
+import { lazy, useState } from "react"
 import submitForm from "../../../utils/submitForm"
 import { API_URL } from "../../../utils/constants"
+
+const SelectChannel = lazy(() => import('./SelectChannel'))
+const Message = lazy(() => import('./Message'))
+const EmojiRoles = lazy(() => import('./EmojiRoles'))
 
 export default function CreateModal({ setShowCreate, channels, roles, guildID, setReactionsConfig }) {
     const [config, setConfig] = useState({

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 export default function NoXPChannels({ config, setConfig, channels }) {
     const [dropMenu, setDropMenu] = useState(true)
@@ -14,6 +14,8 @@ export default function NoXPChannels({ config, setConfig, channels }) {
             ref.current.value = ""
         }
     }, [selectDrop])
+
+    const filteredChannels = useMemo(() => channels.filter(c => c.type === 0 && !config.noXP_Channels.channels.includes(c.id) && c.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())), [filter])
     return (
         <div className="w-full px-10 py-5 rounded-lg bg-neutral-900 my-3">
             <div className="flex flex-row justify-between items-center cursor-pointer" onClick={() => setDropMenu((prev) => !prev)}>
@@ -68,7 +70,7 @@ export default function NoXPChannels({ config, setConfig, channels }) {
                             </div>
                         </div>
                         <div className={`w-full min-h-fit max-h-[300px] overflow-y-scroll px-4 py-2 flex flex-col gap-2 rounded-lg bg-neutral-950 drop-shadow-lg border-2 border-stone-700/25 transition-all duration-300 absolute bottom-0 ${selectDrop ? "translate-y-full opacity-100 pointer-events-auto" : "translate-y-5 opacity-0 pointer-events-none"} z-10`}>
-                            {channels.filter(c => c.type === 0 && !config.noXP_Channels.channels.includes(c.id) && c.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())).map(c => (
+                            {filteredChannels.map(c => (
                                 <div className="w-full px-2 py-1.5 rounded-md hover:bg-slate-300/25 text-white text-lg font-light transition-all duration-200 cursor-pointer" key={c.id} onClick={() => {
                                     setFilter("")
                                     ref.current.value = ""
