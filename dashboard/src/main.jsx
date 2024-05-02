@@ -10,9 +10,7 @@ import { mainConfigurationLoader } from './loaders/dashboard/mainConfiguration'
 import Loading from './components/loading'
 import { mainLogsLoader } from './loaders/dashboard/mainLogs'
 import { mainLevelingLoader } from './loaders/dashboard/mainLeveling'
-import { mainReactionLoader } from './loaders/dashboard/mainReaction.js/mainReaction'
-import { mainReactionCreateLoader } from './loaders/dashboard/mainReaction.js/mainReactionCreate'
-import { mainReactionEditLoader } from './loaders/dashboard/mainReaction.js/mainReactionEdit'
+import { mainReactionLoader } from './loaders/dashboard/mainReaction'
 
 const Home = lazy(() => import('./pages/Home'))
 const NotFound = lazy(() => import('./pages/404'))
@@ -21,9 +19,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard'))
 const MainDashboard = lazy(() => import('./pages/dashboard/mainDashboard'))
 const MainConfiguration = lazy(() => import('./pages/dashboard/mainConfiguration'))
 const MainLogs = lazy(() => import('./pages/dashboard/mainLogs'))
-const MainReaction = lazy(() => import('./pages/dashboard/mainReaction/mainReaction'))
-const MainReactionCreate = lazy(() => import('./pages/dashboard/mainReaction/mainReactionCreate'))
-const MainReactionEdit = lazy(() => import('./pages/dashboard/mainReaction/mainReactionEdit'))
+const MainReaction = lazy(() => import('./pages/dashboard/mainReaction'))
 const MainLeveling = lazy(() => import('./pages/dashboard/mainLeveling'))
 
 const router = createBrowserRouter([
@@ -72,20 +68,6 @@ const router = createBrowserRouter([
           <MainReaction/>
         </Suspense>,
         loader: mainReactionLoader
-      },
-      {
-        path: "/dashboard/:guildID/reactionroles/create",
-        element: <Suspense fallback={<Loading/>}>
-          <MainReactionCreate/>
-        </Suspense>,
-        loader: mainReactionCreateLoader
-      },
-      {
-        path: "/dashboard/:guildID/reactionroles/edit/:messageID",
-        element: <Suspense fallback={<Loading/>}>
-          <MainReactionEdit/>
-        </Suspense>,
-        loader: mainReactionEditLoader
       },
       {
         path: "/dashboard/:guildID/leveling",

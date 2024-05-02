@@ -4,6 +4,7 @@ const schema = new Schema({
     guildId: { type: String, required: true },
     messageId: { type: String, required: true, unique: true },
     message: { type: String, default: "" },
+    channel: { type: String, default: "" },
     embed: {
         author: {
             name: { type: String, default: "" },
