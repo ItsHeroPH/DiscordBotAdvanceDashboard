@@ -1,10 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChromePicker } from "react-color";
 import { useInView } from "react-intersection-observer";
 
 export default function MessageEmbed({ config, setConfig }) {
     const [embedColorPicker, setEmbedColorPicker] = useState(false)
-
+    const isRequired = useMemo(() => {
+        let isEmpty = true
+        for (const key of Object.keys(config.embed)) {
+            if(key !== "color" && typeof config.embed[key] == "string" && config.embed[key].length > 0) {
+                isEmpty = false
+            }
+        }
+        return isEmpty && config.messageEmbed
+    },[config])
     return (
         <div className={`w-full sm:w-[400px] p-3 rounded-lg bg-stone-700 border-l-8 flex flex-row flex-wrap justify-between ${config.messageEmbed ? "" : "hidden"}`} style={{borderLeftColor: config.embed.color}}>
             <div className="w-full">
@@ -63,7 +71,7 @@ export default function MessageEmbed({ config, setConfig }) {
                 </div>
                 <h1 className="text-md text-gray-300 font-medium">Description</h1>
                 <div className="w-full sm:w-[350px] rounded-lg bg-neutral-800">
-                    <textarea className="w-full min-h-[100px] max-h-[400px] bg-transparent outline-none text-lg text-gray-300 px-3 py-1 font-semibold" onChange={(e) => 
+                    <textarea className="w-full min-h-[100px] max-h-[400px] bg-transparent outline-none text-lg text-gray-300 px-3 py-1 font-semibold" required={isRequired} onChange={(e) => 
                         setConfig({...config, embed: {...config.embed, description: e.target.value }}) 
                         } defaultValue={config.embed.description} maxLength={4096}/>
                 </div>

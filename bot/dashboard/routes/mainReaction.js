@@ -115,13 +115,16 @@ module.exports = (app, client, valid) => {
         if(req.body.channel) {
             reactionConfig.channel = req.body.channel
         }
+        if(req.body.type) {
+            reactionConfig.type = req.body.type
+        }
 
         const channel = await guild.channels.cache.find((ch) => ch.id == reactionConfig.channel)
 
         if(channel) {
             if(reactionConfig.messageEmbed) {
 
-                const URL = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/g
+                const URL = /^(http(s):\/\/.)[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/
                 const embed = new EmbedBuilder()
                 if(reactionConfig.embed.author.name) {
                     embed.setAuthor({
@@ -161,20 +164,36 @@ module.exports = (app, client, valid) => {
                     embed.setTimestamp(Date.now())
                 }
                 await channel.messages.fetch((m) => m.id == reactionConfig.messageId).then(async(msg) => {
-                    await msg.delete()
-                    const newMessage = await channel.send({ content: reactionConfig.message, embeds: [embed]})
-                    reactionConfig.messageId = newMessage.id
-                    for(const react of req.body.reactions) {
-                        await newMessage.react(react.emoji)
+                    if(msg.first().editable) {
+                        const newMessage = await msg.first().edit({ content: reactionConfig.message, embeds: [embed]})
+                        await newMessage.reactions.removeAll()
+                        for(const react of reactionConfig.reactions) {
+                            await newMessage.react(react.emoji)
+                        }
+                    } else {
+                        await msg.first().delete()
+                        const newMessage = await channel.send({ content: reactionConfig.message, embeds: [embed]})
+                        reactionConfig.messageId = newMessage.id
+                        for(const react of reactionConfig.reactions) {
+                            await newMessage.react(react.emoji)
+                        }
                     }
                 })
             } else {
-                await channel.messages.fetch((m) => m.id == reactionConfig.messageId).then(async(msg) => {
-                    await msg.delete()
-                    const newMessage = await channel.send({ content: reactionConfig.message})
-                    reactionConfig.messageId = newMessage.id
-                    for(const react of req.body.reactions) {
-                        await newMessage.react(react.emoji)
+                await channel.messages.fetch({ around: reactionConfig.messageId, limit: 1 }).then(async(msg) => {
+                    if(msg.first().editable) {
+                        const newMessage = await msg.first().edit({ content: reactionConfig.message})
+                        await newMessage.reactions.removeAll()
+                        for(const react of reactionConfig.reactions) {
+                            await newMessage.react(react.emoji)
+                        }
+                    } else {
+                        await msg.first().delete()
+                        const newMessage = await channel.send({ content: reactionConfig.message})
+                        reactionConfig.messageId = newMessage.id
+                        for(const react of reactionConfig.reactions) {
+                            await newMessage.react(react.emoji)
+                        }
                     }
                 })
             }
@@ -187,6 +206,11 @@ module.exports = (app, client, valid) => {
     })
     app.post("/api/guild/:guildID/config/reactionroles/:messageID/delete", valid, async(req, res) => {
         const guild = await client.guilds.cache.get(req.params.guildID)
+        const reactionConfig = await ReactionRoles.findOne({ guildId: guild.id, messageId: req.params.messageID })
+        const channel = await guild.channels.cache.find((ch) => ch.id == reactionConfig.channel)
+        if(channel) await channel.messages.fetch({ around: reactionConfig.messageId, limit: 1 }).then(async(msg) => {
+            await msg.first()?.delete()
+        })
         await ReactionRoles.deleteOne({ guildId: guild.id, messageId: req.params.messageID })
         const reactionRoles = await ReactionRoles.find({ guildId: guild.id })
         res.json({

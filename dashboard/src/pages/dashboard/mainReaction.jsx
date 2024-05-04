@@ -1,12 +1,13 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
-import { lazy, useEffect, useState } from "react";
-import CreateModal from "../../components/dashboard/mainReaction/CreateModal";
-import EditModal from "../../components/dashboard/mainReaction/EditModal";
+import { Suspense, lazy, useEffect, useState } from "react";
 
 const SideBar = lazy(() => import('../../components/dashboard/SideBar'))
 const NavigationBar = lazy(() => import('../../components/dashboard/NavigationBar'))
 const ReactionRolesList = lazy(() => import('../../components/dashboard/mainReaction/ReactionRolesList'))
+const CreateModal = lazy(() => import("../../components/dashboard/mainReaction/CreateModal"))
+const EditModal = lazy(() => import("../../components/dashboard/mainReaction/EditModal"))
+const DeleteNotification = lazy(() => import("../../components/dashboard/mainReaction/DeleteNotification"))
 
 export default function MainReaction() {
     const { bot, user, guild, guilds, reactionRoles, channels, roles } = useLoaderData()
@@ -22,7 +23,17 @@ export default function MainReaction() {
     const [configEdit, setConfigEdit] = useState(null)
 
     const [reactionsConfig, setReactionsConfig] = useState([...reactionRoles])
-    useEffect(() => {}, [reactionsConfig])
+    const [noConfigs, setNoConfigs] = useState(true)
+
+    const [deleteNotif, setDeleteNotif] = useState(null)
+
+    useEffect(() => {
+        if(reactionsConfig.length == 0) {
+            setNoConfigs(true)
+        } else {
+            setNoConfigs(false)
+        }
+    }, [reactionsConfig])
     return (
         <HelmetProvider>
             <Helmet>
@@ -52,16 +63,15 @@ export default function MainReaction() {
                                         Create New Reaction Role
                                     </div>
                                     <div className="w-full h-fit p-3 rounded-lg bg-neutral-800">
-                                        { reactionRoles.length == 0 ? (
+                                        { noConfigs ? (
                                             <div className="flex flex-col">
                                                 <h1 className="text-xl text-gray-400 font-bold text-center">There is no reaction roles yet!</h1>
                                                 <h1 className="text-md text-gray-600 font-medium text-center">Once you add reaction roles,<br></br>You can see them here</h1>
                                             </div>
-                                        ) : (<></>)
+                                        ) : reactionsConfig.map((reaction, i) => (
+                                            <ReactionRolesList reaction={reaction} channels={channels} roles={roles} setConfigEdit={setConfigEdit} setReactionsConfig={setReactionsConfig} setDeleteNotif={setDeleteNotif} key={i}/>
+                                            ))
                                         }
-                                        {reactionsConfig.map((reaction, i) => (
-                                            <ReactionRolesList reaction={reaction} channels={channels} roles={roles} setConfigEdit={setConfigEdit} setReactionsConfig={setReactionsConfig} key={i}/>
-                                        ))}
                                     </div>
                                 </div>
                             </div>
@@ -69,11 +79,36 @@ export default function MainReaction() {
                     </div>
                     {
                         showCreate &&
-                        <CreateModal setShowCreate={setShowCreate} channels={channels} roles={roles} guildID={guild.id} setReactionsConfig={setReactionsConfig}/>
+                        <Suspense fallback={
+                            <div className="w-screen h-screen bg-stone-950/45 fixed top-0 left-0 right-0 z-20 p-10 flex justify-center items-center">
+                                <div className="w-[500px] h-[570px] relative rounded-xl bg-zinc-900 shadow-lg border-2 border-gray-700/50 animate-pulse">
+                                </div>
+                            </div>
+                        }>
+                            <CreateModal setShowCreate={setShowCreate} channels={channels} roles={roles} guildID={guild.id} setReactionsConfig={setReactionsConfig}/>
+                        </Suspense>
                     }
                     {
                         configEdit &&
-                        <EditModal setConfigEdit={setConfigEdit} config={configEdit} channels={channels} roles={roles} guildID={guild.id} setReactionsConfig={setReactionsConfig} />
+                        <Suspense fallback={
+                            <div className="w-screen h-screen bg-stone-950/45 fixed top-0 left-0 right-0 z-20 p-10 flex justify-center items-center">
+                                <div className="w-[500px] h-[770px] relative rounded-xl bg-zinc-900 shadow-lg border-2 border-gray-700/50 animate-pulse">
+                                </div>
+                            </div>
+                        }>
+                            <EditModal setConfigEdit={setConfigEdit} config={configEdit} channels={channels} roles={roles} guildID={guild.id} setReactionsConfig={setReactionsConfig} />
+                        </Suspense>
+                    }
+                    {
+                        deleteNotif &&
+                        <Suspense fallback={
+                            <div className="w-screen h-screen bg-stone-950/45 fixed top-0 left-0 right-0 z-20 p-10 flex justify-center items-center">
+                                <div className="w-[500px] h-[50px] relative rounded-xl bg-neutral-900 shadow-lg animate-pulse">
+                                </div>
+                            </div>
+                        }>
+                            <DeleteNotification data={deleteNotif} setDeleteNotif={setDeleteNotif} setReactionsConfig={setReactionsConfig} />
+                        </Suspense>
                     }
                 </div>
             </div>

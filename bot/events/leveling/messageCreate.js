@@ -6,8 +6,8 @@ const UserLeveling = require("../../schemas/users/UserLeveling");
 module.exports = class extends Event {
     async run(message) {
         const config = await Leveling.findOne({ guildId: message.guild.id }) || new Leveling({ guildId: message.guild.id }).save().then(() => {})
-        const User = await UserLeveling.findOne({ guildId: message.guild.id, userId: message.member.id }) || new UserLeveling({ guildId: message.guild.id, userId: message.member.id }).save().then(() => {})
         if(message.author.bot || !config.enable) return;
+        const User = await UserLeveling.findOne({ guildId: message.guild.id, userId: message.member.id }) || new UserLeveling({ guildId: message.guild.id, userId: message.member.id }).save().then(() => {})
 
         const xp = Math.max(Math.floor((Math.random() * (config.xp.maximum - config.xp.minimum) + config.xp.minimum) * config.xp.multiplier), 0)
         if(config.noXP_Channels.type == 1) {

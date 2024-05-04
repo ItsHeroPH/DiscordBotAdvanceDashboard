@@ -1,10 +1,9 @@
 import submitForm from "../../../utils/submitForm"
 import { API_URL } from "../../../utils/constants"
-import { lazy } from "react"
-
-const SelectChannel = lazy(() => import('./SelectChannel'))
-const Message = lazy(() => import('./Message'))
-const EmojiRoles = lazy(() => import('./EmojiRoles'))
+import SelectChannel from "./SelectChannel"
+import SelectType from "./SelectType"
+import Message from "./Message"
+import EmojiRoles from "./EmojiRoles"
 
 export default function EditModal({ setConfigEdit, config, channels, roles, guildID, setReactionsConfig }) {
     return (
@@ -22,12 +21,13 @@ export default function EditModal({ setConfigEdit, config, channels, roles, guil
                     </div>
                     <div className="w-full min-h-[625px - 100vh] max-h-[625px] overflow-auto no-scrollbar px-4">
                         <SelectChannel config={config} setConfig={setConfigEdit} channels={channels}/>
+                        <SelectType config={config} setConfig={setConfigEdit}/>
                         <Message config={config} setConfig={setConfigEdit}/>
                         <EmojiRoles config={config} setConfig={setConfigEdit} roles={roles}/>
                     </div>
                     <div className="flex flex-row gap-3 justify-end items-center my-2 w-full h-fit p-2 rounded-b-xl z-50 bg-zinc-950">
                         <button className="w-[100px] p-2 cursor-pointer hover:bg-zinc-700 rounded-md font-medium text-gray-600" type="reset">Close</button>
-                        <button className="w-[130px] p-2 cursor-pointer bg-sky-600 rounded-md font-medium text-sky-300" type="submit">Save Changes</button>
+                        <button className="w-[130px] p-2 cursor-pointer bg-sky-600 rounded-md font-medium text-sky-100" type="submit">Save Changes</button>
                     </div>
                 </form>
             </div>
