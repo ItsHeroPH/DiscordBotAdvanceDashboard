@@ -79,7 +79,7 @@ export const ReactionRolesTypes = [
     },
     {
         name: "Binding",
-        description: "Gives the role, but doesn't swap to the other role",
+        description: "Gives the role, but doesn't swap to the other role and you can't remove it",
         type: 6
     }
 ]
