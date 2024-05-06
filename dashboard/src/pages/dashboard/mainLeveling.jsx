@@ -1,6 +1,6 @@
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
-import { lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { API_URL } from "../../utils/constants";
 import submitForm from "../../utils/submitForm";
 
@@ -89,12 +89,78 @@ export default function MainLeveling() {
                                     setTimeout(() => setError(false), 300)
                                 }}
                             >
-                                <LevelingMessage config={config} setConfig={setConfig} channels={channels}/>
-                                <LevelingCard config={config} setConfig={setConfig} user={user}/>
-                                <RankRewards config={config} setConfig={setConfig} roles={roles}/>
-                                <XPRate config={config} setConfig={setConfig}/>
-                                <NoXPChannels config={config} setConfig={setConfig} channels={channels}/>
-                                <NoXPRoles config={config} setConfig={setConfig} roles={roles}/>
+                                <Suspense fallback={
+                                    <div className="w-full px-10 py-5 rounded-lg bg-neutral-900 my-3">
+                                        <div className="flex flex-row justify-between items-center cursor-pointer">
+                                            <div>
+                                                <h1 className="text-xl text-white font-bold">Leveling Message</h1>
+                                                <p className="text-md text-gray-600 font-medium">Here you can customize the message that the bot send when the member gain levels</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }>
+                                    <LevelingMessage config={config} setConfig={setConfig} channels={channels}/>
+                                </Suspense>
+                                <Suspense fallback={
+                                    <div className="w-full px-10 py-5 rounded-lg bg-neutral-900 my-3">
+                                        <div className="flex flex-row justify-between items-center cursor-pointer">
+                                            <div>
+                                                <h1 className="text-xl text-white font-bold">Rank Card</h1>
+                                                <p className="text-md text-gray-600 font-medium">Here you can customize the server rank cards</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }>
+                                    <LevelingCard config={config} setConfig={setConfig} user={user}/>
+                                </Suspense>
+                                <Suspense fallback={
+                                    <div className="w-full px-10 py-5 rounded-lg bg-neutral-900 my-3">
+                                        <div className="flex flex-row justify-between items-center cursor-pointer">
+                                            <div>
+                                                <h1 className="text-xl text-white font-bold">Rank Reward</h1>
+                                                <p className="text-md text-gray-600 font-medium">Here you can customize the rewards will be given to the user when they level up</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }>
+                                    <RankRewards config={config} setConfig={setConfig} roles={roles}/>
+                                </Suspense>
+                                <Suspense fallback={
+                                    <div className="w-full px-10 py-5 rounded-lg bg-neutral-900 my-3">
+                                        <div className="flex flex-row justify-between items-center cursor-pointer">
+                                            <div>
+                                                <h1 className="text-xl text-white font-bold">XP Rate</h1>
+                                                <p className="text-md text-gray-600 font-medium">Here you can customize the XP Rate that member can obtain</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }>
+                                    <XPRate config={config} setConfig={setConfig}/>
+                                </Suspense>
+                                <Suspense fallback={
+                                    <div className="w-full px-10 py-5 rounded-lg bg-neutral-900 my-3">
+                                        <div className="flex flex-row justify-between items-center cursor-pointer">
+                                            <div>
+                                                <h1 className="text-xl text-white font-bold">No XP Channel</h1>
+                                                <p className="text-md text-gray-600 font-medium">Here you can set the channels where the user cannot gain XP</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }>
+                                    <NoXPChannels config={config} setConfig={setConfig} channels={channels}/>
+                                </Suspense>
+                                <Suspense fallback={
+                                    <div className="w-full px-10 py-5 rounded-lg bg-neutral-900 my-3">
+                                        <div className="flex flex-row justify-between items-center cursor-pointer">
+                                            <div>
+                                                <h1 className="text-xl text-white font-bold">No XP Role</h1>
+                                                <p className="text-md text-gray-600 font-medium">Here you can set the roles that user cannot gain XP when they have them</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }>
+                                    <NoXPRoles config={config} setConfig={setConfig} roles={roles}/>
+                                </Suspense>
                                 <FormChangePopUp isChanged={isChanged} onError={onError}/>
                             </form>
                         </div>

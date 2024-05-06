@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default async function submitForm(url, data) {
-    await axios.post(url, data, { withCredentials: true })
+    return (await axios.post(url, data, { withCredentials: true })).data
 }

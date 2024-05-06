@@ -13,7 +13,9 @@ module.exports = class Hewo extends Client {
                 GatewayIntentBits.GuildMessages,
                 GatewayIntentBits.MessageContent,
                 GatewayIntentBits.GuildPresences,
-                GatewayIntentBits.GuildEmojisAndStickers
+                GatewayIntentBits.GuildEmojisAndStickers,
+                GatewayIntentBits.GuildMessageTyping,
+                GatewayIntentBits.GuildWebhooks,
             ],
             partials: [
                 Partials.User,
