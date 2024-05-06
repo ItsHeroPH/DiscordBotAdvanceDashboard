@@ -15,7 +15,7 @@ export default function EditModal({ setConfigEdit, config, channels, roles, guil
                     setReactionsConfig(newReactionRole.config)
                     setTimeout(() => setConfigEdit(null), 100)
                 }}>
-                    <div className="flex flex-row justify-between items-center mb-2 w-full h-full p-4 rounded-t-xl bg-zinc-950 z-40">
+                    <div className="flex flex-row justify-between items-center w-full h-full p-4 rounded-t-xl bg-zinc-950 z-40">
                         <h1 className="font-bold text-white text-lg">Edit Reaction Role</h1>
                         <h1 className="font-bold text-red-500 text-3xl cursor-pointer" onClick={() => setConfigEdit(null)}><i className="fa-solid fa-xmark"></i></h1>
                     </div>
@@ -25,7 +25,7 @@ export default function EditModal({ setConfigEdit, config, channels, roles, guil
                         <Message config={config} setConfig={setConfigEdit}/>
                         <EmojiRoles config={config} setConfig={setConfigEdit} roles={roles}/>
                     </div>
-                    <div className="flex flex-row gap-3 justify-end items-center my-2 w-full h-fit p-2 rounded-b-xl z-50 bg-zinc-950">
+                    <div className="flex flex-row gap-3 justify-end items-center w-full h-fit p-2 rounded-b-xl z-50 bg-zinc-950">
                         <button className="w-[100px] p-2 cursor-pointer hover:bg-zinc-700 rounded-md font-medium text-gray-600" type="reset">Close</button>
                         <button className="w-[130px] p-2 cursor-pointer bg-sky-600 rounded-md font-medium text-sky-100" type="submit">Save Changes</button>
                     </div>
