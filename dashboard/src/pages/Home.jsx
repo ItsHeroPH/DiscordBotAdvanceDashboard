@@ -1,51 +1,28 @@
-import { Helmet, HelmetProvider } from "react-helmet-async";
-import NavigationBar from "../components/NavigationBar";
-import { useLoaderData } from "react-router-dom";
-import leveling_card from "../public/leveling-card.png"
-import reaction_roles from "../public/reaction-roles.png"
+import { faDiscord } from "@fortawesome/free-brands-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { lazy } from "react"
+import { Helmet, HelmetProvider } from "react-helmet-async"
+import { useLoaderData } from "react-router"
+
+const Navbar = lazy(() => import('../components/Navbar'))
 
 export default function Home() {
     const { bot, user } = useLoaderData()
-    return(
+    return (
         <HelmetProvider>
             <Helmet>
                 <title>The Best Multipurpose Discord Bot</title>
                 <link rel="icon" type="image/png" href={bot.displayAvatarURL}/>
             </Helmet>
-            <NavigationBar bot={bot} user={user}/>
-            <div className="w-screen h-full bg-neutral-800">
-                <div className="w-[75%] mx-auto py-11">
-                    <div className="flex flex-row gap-3 justify-start">
-                        <img className="w-[96px] h-[96px] rounded-full" src={bot.displayAvatarURL}/>
-                        <div className="flex flex-col">
-                            <h1 className="text-6xl text-white font-black">{bot.username}</h1>
-                            <h1 className="text-2xl text-white font-medium">The Best Multipurpose Bot</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="w-screen h-full bg-neutral-900">
-                <div className="w-[50%] mx-auto py-11 flex flex-col justify-center items-center gap-4">
-                    <h1 className="text-5xl text-white font-medium text-center">Features</h1>
-                    <div className="grid grid-cols-3 xl:grid-cols-6 gap-16 items-center">
-                        <div className="col-span-3 flex flex-col gap-4">
-                            <h1 className="text-4xl text-white font-black">Leveling and XP System</h1>
-                            <p className="text-md text-gray-400 font-medium text-wrap">Make it more fun in your server activities by implementing our leveling system.
-                            This gives the rewards to the most active on the server, by gaining xp and getting level ups. This is design to encourage the member of the server
-                            to actively participate to the server's activities and chats</p>
-                        </div>
-                        <div className="col-span-3">
-                            <img className="w-[400px] h-[400px]"src={leveling_card}/>
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-3 xl:grid-cols-6 gap-16 items-center">
-                        <div className="col-span-3">
-                            <img className="w-[400px] h-[400px]"src={reaction_roles}/>
-                        </div>
-                        <div className="col-span-3 flex flex-col gap-4">
-                            <h1 className="text-4xl text-white font-black">Reaction Roles</h1>
-                            <p className="text-md text-gray-400 font-medium text-wrap">Make it more easier for you to give them all the roles they wanted by implementing our reaction roles system. 
-                            This is design to make your server modern feels, with a few clicks they can get the roles that they wanted for.</p>
+            <div className="w-screen h-screen bg-zinc-800 fixed">
+                <Navbar bot={bot} user={user}/>
+                <div className="w-full h-80 bg-zinc-900 flex justify-center items-center">
+                    <img src={bot.displayAvatarURL} className="rounded-full w-[128px] h-[128px] hidden md:block"/>
+                    <div className="flex flex-col mx-5">
+                        <h1 className="font-black text-white text-5xl">{bot.username}</h1>
+                        <p className="font-medium text-gray-400 text-2xl">The Best Multipurpose Discord Bot</p>
+                        <div className="my-3 px-6 py-2 w-fit rounded-full border-2 border-gray-600 font-bold text-gray-600 text-xl cursor-pointer hover:bg-slate-400/25 hover:text-gray-200 transition-all duration-150">
+                            <FontAwesomeIcon className="mr-2" icon={faDiscord}/> Add to Discord
                         </div>
                     </div>
                 </div>
