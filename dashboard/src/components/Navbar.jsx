@@ -1,20 +1,24 @@
 import { faArrowRightToBracket, faCaretDown, faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { API_URL } from "../utils/constants";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 export default function Navbar({ bot, user }) {
     const [userMenu, setUserMenu] = useState(false)
     return(
         <div className="w-full px-6 py-4 bg-zinc-900 flex justify-between items-center">
             <div className="flex gap-2 cursor-pointer items-center" onClick={() => location.assign("/")}>
-                <img className="w-[42px] h-[42px] rounded-full" src={bot.displayAvatarURL}/>
-                <h1 className="font-black text-white text-3xl">{bot.username}</h1>
+                <Suspense fallback={<div className="w-[42px] h-[42px] rounded-full bg-zinc-600 animate-pulse"></div>}>
+                    <img className="w-[42px] h-[42px] rounded-full" src={bot.displayAvatarURL}/>
+                </Suspense>
+                <h1 className="font-black text-white text-3xl hidden sm:block">{bot.username}</h1>
             </div>
             { user ? (
                 <div className="relative">
                     <div className="flex gap-2 cursor-pointer items-center" onClick={() => setUserMenu((p) => !p)}>
-                        <img className="w-[32px] h-[32px] rounded-full" src={user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : "https://cdn.discordapp.com/embed/avatars/2.png"}/>
+                        <Suspense fallback={<div className="w-[32px] h-[32px] rounded-full bg-zinc-600 animate-pulse"></div>}>
+                            <img className="w-[32px] h-[32px] rounded-full" src={user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png` : "https://cdn.discordapp.com/embed/avatars/2.png"}/>
+                        </Suspense>
                         <h1 className="font-black text-white text-xl hidden sm:block">{user.global_name}</h1>
                         <FontAwesomeIcon className={`text-gray-500 text-2xl transition-all duration-200 ${userMenu ? "rotate-180" : "rotate-0"}`} icon={faCaretDown}/>
                     </div>
