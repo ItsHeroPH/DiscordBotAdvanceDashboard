@@ -5,10 +5,14 @@ import './index.css'
 import homeLoader from './loader/homeLoader'
 import dashboardLoader from './loader/dashboardLoader'
 import { mainDashboardLoader } from './loader/dahsboard/mainDashboard'
+import { mainConfigurationLoader } from './loader/dahsboard/mainConfiguration'
+import { mainReactionLoader } from './loader/dahsboard/mainReaction'
 
 const Home = lazy(() => import('./pages/Home'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 const MainDashboard = lazy(() => import('./pages/dashboard/mainDashboard'))
+const MainConfiguration = lazy(() => import('./pages/dashboard/mainConfiguration'))
+const MainReaction = lazy(() => import('./pages/dashboard/mainReaction'))
 
 const router = createBrowserRouter([
   {
@@ -25,6 +29,16 @@ const router = createBrowserRouter([
     path: "/dashboard/:guildId",
     element: <MainDashboard/>,
     loader: mainDashboardLoader
+  },
+  {
+    path: "/dashboard/:guildId/config",
+    element: <MainConfiguration/>,
+    loader: mainConfigurationLoader
+  },
+  {
+    path: "/dashboard/:guildId/reactionroles",
+    element: <MainReaction/>,
+    loader: mainReactionLoader
   },
 ])
 

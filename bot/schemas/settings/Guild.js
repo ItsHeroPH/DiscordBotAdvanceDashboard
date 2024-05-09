@@ -10,7 +10,6 @@ const schema = new Schema({
     disabledCommands: { type: Array, default: []},
     leaves: { type: Array, default: []},
     joins: { type: Array, default: []},
-    logs: { type: Array, default: []}
 })
 
 module.exports = model("guild-settings", schema)

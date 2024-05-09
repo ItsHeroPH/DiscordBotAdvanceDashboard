@@ -11,6 +11,8 @@ const GuildCards = lazy(() => import('../components/GuildCards'))
 export default function Dashboard() {
     const { bot, user, userGuilds, botGuilds } = useLoaderData()
 
+    if(!user) return location.assign("/") 
+
     const [filter, setFilter] = useState("")
     const [sort, setSort] = useState("a-z")
     const [selectSort, setSelectSort] = useState(false)

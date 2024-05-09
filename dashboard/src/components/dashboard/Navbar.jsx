@@ -1,11 +1,13 @@
-import { faArrowRightToBracket, faCaretDown, faServer } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightToBracket, faBars, faCaretDown, faServer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Suspense, useState } from "react";
 
-export default function NavBar({ bot, user}) {
+export default function NavBar({ bot, user, setSidebar }) {
     const [userMenu, setUserMenu] = useState(false)
     return (
-        <div className="w-full p-5 bg-zinc-900 flex justify-between lg:justify-end">
+        <div className="w-full p-5 bg-zinc-900 border-y-2 border-black flex items-center justify-between lg:justify-end sticky top-0 z-10">
+            <FontAwesomeIcon className="p-2 border-2 border-gray-700 bg-zinc-800 rounded-md font-black text-white text-2xl cursor-pointer lg:hidden" onClick={() => setSidebar(true)} icon={faBars}/>
+            <h1 className="font-black text-white text-3xl lg:hidden">{bot.username}</h1>
             <div className="relative">
                 <div className="flex gap-2 cursor-pointer items-center" onClick={() => setUserMenu((p) => !p)}>
                     <Suspense fallback={<div className="w-[32px] h-[32px] rounded-full bg-zinc-600 animate-pulse"></div>}>

@@ -16,11 +16,17 @@ const fetchGuild = async(guildID) => {
     return res.data.guild
 }
 
-export const mainDashboardLoader = async({ params }) => {
+const fetchGuildConfig = async(guildID) => {
+    const res = await axios.get(`${API_URL}/guild/${guildID}/config`, { withCredentials: true })
+    return res.data.config
+}
+
+export const mainConfigurationLoader = async({ params }) => {
     const BotPromise = fetchBot()
     const UserPromise = fetchUser()
     const GuildPromise = fetchGuild(params.guildId)
-    const [bot, user, guild] = await Promise.all([BotPromise, UserPromise, GuildPromise])
+    const GuildConfigPromise = fetchGuildConfig(params.guildId)
+    const [bot, user, guild, guildConfig] = await Promise.all([BotPromise, UserPromise, GuildPromise, GuildConfigPromise])
 
-    return { bot: bot, user: user.user, guild: guild }
+    return { bot: bot, user: user.user, guild: guild, guildConfig: guildConfig }
 }
