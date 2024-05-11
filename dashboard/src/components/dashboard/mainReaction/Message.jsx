@@ -17,7 +17,7 @@ export default function Message({ config, setConfig }) {
                 </Suspense>
             }
             { config.messageEmbed ? (
-                <div className="px-2 py-1 rounded-md bg-red-600 w-fit font-bold text-white text-lg cursor-pointer" onClick={() => setConfig({...config, messageEmbed: false})}>Disable Embed</div>
+                <div className="px-2 py-1 rounded-md bg-red-600 w-fit mt-5 font-bold text-white text-lg cursor-pointer" onClick={() => setConfig({...config, messageEmbed: false})}>Disable Embed</div>
             ) : (
                 <div className="px-2 py-1 rounded-md bg-sky-600 w-fit font-bold text-white text-lg cursor-pointer" onClick={() => setConfig({...config, messageEmbed: true})}>Enable Embed</div>
             )}

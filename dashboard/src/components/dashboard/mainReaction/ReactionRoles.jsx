@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { lazy } from "react";
 
 const ReactionRolesList = lazy(() => import('./ReactionRoleList'))
-export default function ReactionRoles({ config, setConfig, channels, roles, setCreateReaction }) {
+export default function ReactionRoles({ config, setConfig, channels, roles, setCreateReaction, setEditReaction }) {
     return (
         <div className="w-full h-fit drop-shadow-xl border-2 border-black rounded-lg col-span-1">
             <div className="w-full px-5 py-3 rounded-t-lg border-b-2 border-b-black bg-zinc-800">
@@ -17,7 +17,7 @@ export default function ReactionRoles({ config, setConfig, channels, roles, setC
                     <FontAwesomeIcon className="mr-2" icon={faPlus}/>
                     Create new Reaction Roles
                 </button>
-                <ReactionRolesList config={config} channels={channels} roles={roles}/>
+                <ReactionRolesList config={config} channels={channels} roles={roles} setEditReaction={setEditReaction}/>
             </div>
         </div>
     )

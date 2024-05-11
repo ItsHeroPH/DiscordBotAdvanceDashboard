@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useState } from "react";
 import ReactionRoleModes from "../../../utils/ReactionRoleModes";
 
-export default function ReactionRolesList({ config, channels, roles }) {
+export default function ReactionRolesList({ config, channels, roles, setEditReaction }) {
     return (
         <table className="w-full">
             <thead>
@@ -16,14 +16,14 @@ export default function ReactionRolesList({ config, channels, roles }) {
             </thead>
             <tbody>
                 { config.map((reaction, i) => (
-                    <List key={reaction.messageId} reaction={reaction} channels={channels} roles={roles} index={i}/>
+                    <List key={reaction.messageId} reaction={reaction} channels={channels} roles={roles} setEditReaction={setEditReaction} index={i}/>
                 ))}
             </tbody>
         </table>
     )
 }
 
-function List({ reaction, channels, roles, index }) {
+function List({ reaction, channels, roles, setEditReaction, index }) {
     const channel = useMemo(() => channels.find((ch) => ch.id == reaction.channel),[channels])
     const bg = useMemo(() => (index + 1) % 2 === 0 ? "bg-zinc-800" : "bg-zinc-800/50", [index])
     const [roleList, setRoleList] = useState([])
@@ -69,7 +69,8 @@ function List({ reaction, channels, roles, index }) {
             </td>
             <td className={`border-2 border-black px-3 py-2 ${bg}`}>
                 <div className="flex flex-wrap gap-4 justify-center">
-                <div className="w-[40px] h-[40px] bg-gray-700 rounded-lg flex justify-center items-center font-black text-xl text-gray-400 cursor-pointer relative group" onClick={() => {
+                    <div className="w-[40px] h-[40px] bg-gray-700 rounded-lg flex justify-center items-center font-black text-xl text-gray-400 cursor-pointer relative group" onClick={() => {
+                        setEditReaction(reaction)
                     }}>
                         <div className="px-3 py-1.5 bg-neutral-800 rounded-lg absolute -top-10 font-bold text-gray-300 text-sm pointer-events-none transition-all duration-200 opacity-0 group-hover:opacity-100">
                             Edit

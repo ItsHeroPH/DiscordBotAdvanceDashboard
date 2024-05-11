@@ -6,6 +6,7 @@ const SideBar = lazy(() => import('../../components/dashboard/SideBar'))
 const Navbar = lazy(() => import('../../components/dashboard/Navbar'))
 const ReactionRoles = lazy(() => import('../../components/dashboard/mainReaction/ReactionRoles'))
 const ReactionRoleCreate = lazy(() => import('../../components/dashboard/mainReaction/ReactionRoleCreate'))
+const ReactionRoleEdit = lazy(() => import('../../components/dashboard/mainReaction/ReactionRoleEdit'))
 
 export default function MainReaction() {
     const { bot, user, guild, reactionRoles, channels, roles } = useLoaderData()
@@ -17,6 +18,8 @@ export default function MainReaction() {
     const [reactionsConfig, setReactionsConfig] = useState([...reactionRoles])
 
     const [createReaction, setCreateReaction] = useState(false)
+
+    const [editReaction, setEditReaction] = useState(null)
     return (
         <HelmetProvider>
             <Helmet>
@@ -29,7 +32,7 @@ export default function MainReaction() {
                     <Navbar bot={bot} user={user} setSidebar={setSidebar}/>
                     <div className={`w-full h-full p-10 transition-all duration-200 ${sidebar ? "blur-sm": "blur-none"} lg:blur-none`}>
                         <div className="w-full my-5">
-                            <ReactionRoles config={reactionsConfig} setReactionsConfig={setReactionsConfig} channels={channels} roles={roles} setCreateReaction={setCreateReaction}/>
+                            <ReactionRoles config={reactionsConfig} setReactionsConfig={setReactionsConfig} channels={channels} roles={roles} setCreateReaction={setCreateReaction} setEditReaction={setEditReaction}/>
                         </div>
                     </div>
                 </div>
@@ -40,6 +43,16 @@ export default function MainReaction() {
                         </div>
                     }>
                         <ReactionRoleCreate reactionRoles={reactionsConfig} setReactionroles={setReactionsConfig} setCreateReaction={setCreateReaction} channels={channels} roles={roles}/>
+                    </Suspense>
+                }
+                {
+                    editReaction !== null &&
+                    <Suspense fallback={
+                        <div className="w-screen h-full fixed bg-neutral-800/50 z-20 flex justify-center items-center py-10 px-2">
+                             <div className="w-[200px] h-[300px] border-2 border-black bg-neutral-600 rounded-xl drop-shadow-2xl"></div>
+                        </div>
+                    }>
+                        <ReactionRoleEdit reactionRoles={reactionsConfig} setReactionroles={setReactionsConfig} config={editReaction} setEditReaction={setEditReaction} channels={channels} roles={roles}/>
                     </Suspense>
                 }
             </div>
