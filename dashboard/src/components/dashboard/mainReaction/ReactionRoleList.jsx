@@ -1,7 +1,7 @@
 import { faEdit, faHashtag, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useState } from "react";
-import ReactionRoleModes from "../../../utils/ReactionRoleModes";
+import ReactionRoleModes from "../../../utils/ReactionRole/ReactionRoleModes";
 
 export default function ReactionRolesList({ config, channels, roles, setEditReaction }) {
     return (

@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { Suspense, lazy, useMemo, useState } from "react"
 import { ChromePicker } from "react-color"
+
+const EmbedField = lazy(() => import('./EmbedField'))
 
 export default function MessageEmbed({ config, setConfig }) {
     const [colorPicker, setColorPicker] = useState(false)
+    
     return(
         <>
             <div className="my-3 w-full h-[2px] rounded-full bg-neutral-700"></div>
@@ -49,6 +52,18 @@ export default function MessageEmbed({ config, setConfig }) {
                 <textarea className="w-full min-h-[100px] max-h-[500px] px-3 py-1 font-bold text-white text-lg bg-gray-700 rounded-md border-2 border-black transition-all duration-75 focus:border-sky-300 focus:outline outline-4 outline-sky-600/50" placeholder="Description" onChange={(e) => {
                     setConfig({...config, embed: {...config.embed, description: e.target.value }})
                 }} defaultValue={config.embed.description}></textarea>
+                { config.embed.fields.map((field, index) => (
+                    <Suspense key={`field ${index + 1}`} fallback={
+                        <div className="w-full h-[20px] rounded-full animate-pulse bg-neutral-500"></div>
+                    }>
+                        <EmbedField config={config} setConfig={setConfig} field={field} index={index}/>
+                    </Suspense>
+                ))}
+                <div className={`w-full px-2 py-1 my-1 rounded-md bg-neutral-500 cursor-pointer ${config.embed.fields.length == 25 ? "hidden": ""}`} onClick={() => {
+                    setConfig({...config, embed: {...config.embed, fields: [...config.embed.fields, { name: "", value: "", inline: false }]}})
+                }}>
+                    <h1 className="font-bold text-white text-lg text-center">Add Field</h1>
+                </div>
             </div>
         </>
     )

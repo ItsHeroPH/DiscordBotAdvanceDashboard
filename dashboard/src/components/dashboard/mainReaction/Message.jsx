@@ -7,7 +7,9 @@ export default function Message({ config, setConfig }) {
         <>
             <h1 className="font-bold text-white text-2xl mb-5">Message Content</h1>
             <div className="w-full h-fit bg-neutral-700 rounded-md mb-3">
-                <textarea className="w-full min-h-[80px] max-h-[300px] bg-transparent rounded-md p-2 font-medium text-white text-lg transition-all duration-75 focus:outline focus:border-4 border-sky-400 outline-4 outline-sky-300/50" placeholder="Please enter some message" maxLength={4096}></textarea>
+                <textarea className="w-full min-h-[80px] max-h-[300px] bg-transparent rounded-md p-2 font-medium text-white text-lg transition-all duration-75 focus:outline focus:border-4 border-sky-400 outline-4 outline-sky-300/50" placeholder="Please enter some message" maxLength={4096} onChange={(e) => {
+                    setConfig({...config, message: e.target.value })
+                }}></textarea>
             </div>
             { config.messageEmbed && 
                 <Suspense fallback={

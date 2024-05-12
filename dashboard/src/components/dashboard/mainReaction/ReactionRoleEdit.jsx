@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Suspense, lazy, useState } from "react";
 
 const SelectChannel = lazy(() => import('./SelectChannel'))
+const SelectType = lazy(() => import('./SelectType'))
 const Message = lazy(() => import('./Message'))
 
 export default function ReactionRoleEdit({ reactionRoles, setReactionroles, config, setEditReaction, channels, roles }) {
@@ -10,7 +11,7 @@ export default function ReactionRoleEdit({ reactionRoles, setReactionroles, conf
 
     return (
         <div className="w-screen h-screen fixed top-0 bottom-0 left-0 right-0 bg-neutral-800/50 z-20 flex justify-center items-center px-2">
-            <div className="min-w-[200px] w-[600px] max-w-[600px] h-full drop-shadow-2xl overflow-y-scroll no-scrollbar">
+            <div className="min-w-[200px] w-[800px] max-w-[800px] h-full drop-shadow-2xl overflow-y-scroll no-scrollbar">
                 <form onReset={() => setEditReaction(null)} onSubmit={(e) => {
                     e.preventDefault()
                     setLoading(true)
@@ -29,6 +30,12 @@ export default function ReactionRoleEdit({ reactionRoles, setReactionroles, conf
                                 <div className="w-full h-[20px] rounded-full animate-pulse bg-neutral-500"></div>
                             }>
                                 <SelectChannel config={config} setConfig={setEditReaction} channels={channels} readOnly={true}/>
+                            </Suspense>
+                            <div className="my-3 w-full h-[2px] rounded-full bg-neutral-700"></div>
+                            <Suspense fallback={
+                                <div className="w-full h-[20px] rounded-full animate-pulse bg-neutral-500"></div>
+                            }>
+                                <SelectType config={config} setConfig={setEditReaction}/>
                             </Suspense>
                             <div className="my-3 w-full h-[2px] rounded-full bg-neutral-700"></div>
                             <Suspense fallback={

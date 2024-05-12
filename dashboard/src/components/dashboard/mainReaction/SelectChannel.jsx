@@ -25,13 +25,13 @@ export default function SelectChannel({ config, setConfig, channels, readOnly })
                     <h1 className="font-bold text-white text-lg px-4 py-2">{channel.name}</h1>
                 </div>
             ) : (
-                <div className="relative">
+                <div className="relative z-10">
                     <div className="w-full flex justify-between items-center bg-neutral-600 rounded-md border-2 border-black cursor-pointer" onClick={() => setDropMenu((p) => !p)}>
                         <div className="flex items-center">
                             <FontAwesomeIcon className="ml-4 font-medium text-gray-500" icon={faHashtag}/>
                             <input ref={ref} className="w-full bg-transparent font-bold text-white text-lg px-4 py-2 outline-none" placeholder="Please Select A Channel" onBlur={() => setTimeout(() => setDropMenu(false), 300)} onChange={(e) => {
                                 setFilter(e.target.value)
-                            }} defaultValue={channel?.name} required={true}/>
+                            }} defaultValue={channel?.name} required={true} readOnly={false}/>
                         </div>
                         <FontAwesomeIcon className={`font-bold text-gray-400 text-xl mr-4 translate-all duration-200 ${dropMenu ? "rotate-180" : "rotate-0"}`} icon={faCaretDown}/>
                     </div>
