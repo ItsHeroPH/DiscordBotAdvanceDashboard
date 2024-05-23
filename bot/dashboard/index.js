@@ -91,11 +91,6 @@ module.exports = (client) => {
         if(!req.isAuthenticated()) return res.json({ user: null })
         res.json({ user: req.user })
     })
-    app.get("/api/user/@user/guilds", (req, res) => {
-        if(!req.isAuthenticated()) return res.json({ guilds: null })
-        
-        res.json({ guilds: req.user.guilds })
-    })
     // API GUILD DATA
     const checkIfValid = async(req, res, next) => {
         const guild = client.guilds.cache.get(req.params.guildID)
